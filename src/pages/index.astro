@@ -1,0 +1,36 @@
+---
+import {db, Block} from "astro:db"
+
+if (Astro.request.method === 'POST') {
+	const formData = await Astro.request.formData();
+ 	const slug = formData.get('slug');
+ 	const css = formData.get('css');
+ 	const js = formData.get('js');
+ 	const html = formData.get('html');
+	await db.insert(Block).values({css: "css", js: "js", html: "html", slug: "df"});
+}
+
+const blocks = await db.select().from(Block)
+---
+
+<aside>
+	<pre>
+	{JSON.stringify(blocks, null, 2)}
+	</pre>
+	<button class="create-element-button">
+	</button>
+</aside>
+<section id="content">
+</section>
+<form method="POST" style="display: grid">
+  <label for="slug">slug</label>
+  <input id="slug" name="slug" />
+  <label for="js">js</label>
+  <input id="js" name="js" />
+  <label for="css">css</label>
+  <input id="css" name="css" />
+  <label for="html">html</label>
+  <input id="html" name="html" />
+
+  <button type="submit">Invia</button>
+</form>
